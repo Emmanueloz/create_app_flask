@@ -17,36 +17,16 @@ while True:
     else:
         print("the name is not valid")
 
-# Creación de las carpetas del proyecto
-os.mkdir(name_project)
-os.mkdir(f"{name_project}/app")
-os.mkdir(f"{name_project}/app/static")
-os.mkdir(f"{name_project}/app/templates")
-os.mkdir(f"{name_project}/app/routes")
-os.mkdir(f"{name_project}/app/api")
-
 # carpetas de origen y destino para copiar los archivo
-dirOrigen = os.path.join(os.path.dirname(__file__), "app")
+dirOrigen = os.path.join(os.path.dirname(__file__), "src")
 dirProject = os.path.join(os.getcwd(), name_project)
-dirModuleProject = os.path.join(dirProject, "app")
-ls_app = os.listdir(dirOrigen)
 
+# lista de archivos y carpetas ignorados
+listIgnore = shutil.ignore_patterns('.vscode', '.venv', '__pycache__')
 
-for elemento in ls_app:
-    try:
-        if elemento == "__init__.py":
-            print(f"Copiando {elemento} --> {dirModuleProject} ... ", end="")
-            src = os.path.join(dirOrigen, elemento)  # origen
-            # destino en la carpeta module
-            dst = os.path.join(dirModuleProject, elemento)
-            shutil.copy(src, dst)
-            print("Correcto")
-            continue
-        print(f"Copiando {elemento} --> {dirProject} ... ", end="")
-        src = os.path.join(dirOrigen, elemento)  # origen
-        dst = os.path.join(dirProject, elemento)  # destino
-        shutil.copy(src, dst)
-        print("Correcto")
-    except:
-        print("Falló")
-        print("Error, no se pudo copiar el archivo. Verifique los permisos de escritura")
+# Copia todos los archivos de origen a destino
+try:
+    shutil.copytree(dirOrigen, dirProject, symlinks=False,
+                    ignore=listIgnore)
+except Exception as ex:
+    print("Error", ex)
