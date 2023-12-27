@@ -18,7 +18,7 @@ while True:
         print("the name is not valid")
 
 # carpetas de origen y destino para copiar los archivo
-dirOrigen = os.path.join(os.path.dirname(__file__), "app_flask")
+dirOrigen = os.path.join(os.path.dirname(__file__), "template")
 dirProject = os.path.join(os.getcwd(), name_project)
 
 # lista de archivos y carpetas ignorados
